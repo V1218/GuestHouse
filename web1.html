@@ -1,0 +1,599 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Guest House</title>
+        <style>
+            /* Reset */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                color: #333;
+            }
+
+            /* Navbar */
+            header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 20px;
+                position: sticky;
+                z-index: 10;
+                background-color: #f2f2f2;
+                color: #090909;
+                height: 50px;
+            }
+
+            .title {
+                font-size: 30px;
+                font-weight: bold;
+                color: transparent;
+                background: url('1 (1).png') center/cover;
+                -webkit-background-clip: text;
+                background-clip: text;
+                letter-spacing: 2px;
+                background-color: coral;
+                flex: 1;
+            }
+
+            nav ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+            }
+
+            nav ul li a {
+                color: rgb(111, 97, 92);
+                text-decoration: none;
+                transition: color 0.3s;
+                font-size: 18px;
+            }
+
+            nav ul li a:hover {
+                color: #f4b400;
+            }
+
+            .book-now {
+            background-color: coral;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            font-size: 18px;
+            display: inline-block;
+            margin-left: 20px; /* Adjust this value as needed for spacing */
+            }
+            
+
+            .book-now:hover {
+                background-color:coral;
+            }
+
+            /* Slider Container */
+            .slider-container {
+                position: relative;
+                width: 100%;
+                height: 90vh;
+                overflow: hidden;
+                z-index: -5;
+            }
+
+            .slider-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0;
+                transition: opacity 2s ease-in-out;
+            }
+
+            .slider-image.active {
+                opacity: 1;
+            }
+
+            /* Hero Section */
+            .hero-section {
+                color: #fefcfc;
+                padding-top: 60px;
+                text-align: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 93vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                z-index: 5;
+            }
+
+            .hero-section h1 {
+                font-size: 50px;
+                margin-bottom: 10px;
+                color: #fff;
+            }
+
+            .hero-section h1 span {
+                color: #ed5b06;
+            }
+
+            section {
+                padding: 50px 20px;
+                text-align: center;
+            }
+
+            /* Rooms Section */
+            #rooms {
+                background-color: #f9f9f9;
+                padding: 50px 20px;
+            }
+
+            .rooms-container {
+                display: flex;
+                gap: 10px;
+                justify-content: space-between;
+                margin-top: 30px;
+                flex-wrap: wrap;
+            }
+
+            .room-item {
+                flex: 1;
+                max-width: 30%;
+                text-align: center;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .room-item img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 10px;
+            }
+
+            .room-item p {
+                padding: 15px;
+                font-size: 16px;
+                color: #555;
+            }
+
+            .gallery-section h2, .contact-section h2 {
+                margin-bottom: 4px;
+                font-size: 32px;
+                color: #444;
+                height: 50px;
+            }
+
+            .gallery {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .gallery img {
+                width: 260px;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 10px;
+                transition: transform 0.3s;
+            }
+
+            .gallery img:hover {
+                transform: scale(1.05);
+            }
+
+            footer {
+                background-color: #444;
+                color: #fff;
+                text-align: center;
+                padding: 20px;
+            }
+
+            /* Services Section */
+            .services-section {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 50px;
+                padding: 50px 20px;
+            }
+
+            .services-image {
+                width: 60%;
+                height:290px;
+                border-radius: 0px;
+            }
+
+            .services-content {
+                text-align: left;
+            }
+
+            .services-content h2 {
+                font-size: 32px;
+                margin-bottom: 20px;
+            }
+
+            .service-item {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            .service-icon {
+                font-size: 30px;
+                color:coral;
+            }
+
+            /* Contact Section */
+            .contact-section {
+                background-color: #f9f9f9;
+                padding: 50px 20px;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .contact-info, .contact-form {
+                padding: 30px;
+                border-radius: 10px;
+            }
+
+            .contact-info {
+                width: 30%;
+                background-color: coral;
+                color: #fff;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                text-align: left;
+            }
+
+            .contact-info h3 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .contact-info p, .contact-info a {
+                font-size: 16px;
+                color: #fff;
+            }
+
+            .contact-info a {
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .contact-info a:hover {
+                text-decoration: underline;
+            }
+
+            .contact-info .social-icons {
+                display: flex;
+                gap: 10px;
+                font-size: 24px;
+            }
+
+            .contact-form {
+                width: 60%;
+                background-color: #f9f9f9;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                
+            }
+
+            .contact-form h3 {
+                font-size: 24px;
+                color:coral;
+                margin-bottom: 10px;
+                
+            }
+
+            .contact-form input, .contact-form textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid coral;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            .contact-form button {
+                width: 100px;
+                padding: 10px;
+                background-color: coral;
+                color: #fff;
+                border: none;
+                border-radius: 10px;
+                font-size: 16px;
+                cursor: pointer;
+                align-self: flex-start;
+            }
+
+            .contact-form button:hover {
+                background-color:coral;
+            }
+
+             /* Footer Styling */
+    footer {
+        background-color: #222;
+        color: #ccc;
+        padding: 40px 20px;
+        text-align: left;
+    }
+
+    .footer-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+        height: 220px;
+    }
+
+    .footer-about, .footer-amenities, .footer-contact {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    footer h3 {
+        font-size: 24px;
+        color: coral;
+        margin-bottom: 10px;
+    }
+
+    footer p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    footer a {
+        color: coral;
+        text-decoration: none;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+
+    .social-footer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+    background-color: #222;
+}
+
+.social-icon img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+}
+
+.social-icon img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2); /* Slightly brighter on hover */
+}
+
+        </style>
+    </head>
+    <body>
+        <!-- Navbar and Title -->
+        <header>
+            <span class="title">King Sukh Guest House</span>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#rooms">Rooms</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#Services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="https://wa.link/at5ion" class="book-now">Book Now</a>
+        </header>
+
+        <!-- Slider Container -->
+        <div class="slider-container">
+            <img src="header.jpg" alt="Slider Image 1" class="slider-image active">
+            <img src="ayodhya (1).png" alt="Slider Image 2" class="slider-image">
+            <img src="pixelcut-export (1).png" alt="Slider Image 3" class="slider-image">
+        </div>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <h1>Make Yourself At Home<br />In Our <span>Guest House</span></h1>
+            <h3>Simple - Unique - Friendly</h3>
+        </section>
+
+        <!-- Rooms Section -->
+        <section id="rooms">
+            <h2>About Us & Rooms</h2>
+            <div class="rooms-container">
+                <!-- Room 1 -->
+                <div class="room-item">
+                    <img src="large.jpg" alt="Room 1">
+                    <h1> Spacious Serenity Suite</h1>
+                    <p>Indulge in luxury and ample space in our Spacious Serenity Suite, where tranquility meets roomy elegance.</p>
+                    <h3>Starting from Rs. 1500/night</h3><br>
+                    <br>
+                    <br>
+                </nav>
+                <a href="https://wa.link/at5ion" class="book-now">Book Now</a>
+
+                </div>
+                <!-- Room 2 -->
+                <div class="room-item">
+                    <img src="out.jpg" alt="Room 2">
+                    <h1>The Best Holidays Start Here!</h1>
+                    <p>Embark on a tranquil journey at our Kingsukh Guest House, enveloped by the scenic allure of Biharinath Hill, 
+                        Baranti Hill, Susunia Hill, Joychandi Hill, Garhpanchkot, Baranti Dam, Maithon Dam, and the captivating Panchat Dam. 
+                        Revel in the embrace of comfort, relish delightful meals, and unwind in our verdant garden oasis. Your ideal retreat beckons, 
+                        promising a harmonious blend of nature's beauty and heartfelt hospitality. </p>
+                        <h4>Address: Beside Barshal Water Tank, Manpur, Barhanti, West Bengal 723156
+                        Contact us: +91 9007062180</h4>
+                </div>
+                <!-- Room 3 -->
+                <div class="room-item">
+                    <img src="small.jpg" alt="Room 3">
+                    <h1> Cozy Haven Room</h1>
+                    <p>Unwind in comfort within our Cozy Haven Room, a warm and inviting space that feels like a home away from home.</p>
+                    <h3>Starting from Rs. 1000/night</h3><br>
+                    <br>
+                    <br>
+                </nav>
+                <a href="https://wa.link/at5ion" class="book-now">Book Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <div class="gallery">
+                <img src="1 (1).png" alt="Gallery Image 1">
+                <img src="flower.png" alt="Gallery Image 2">
+                <img src="mithonDam.png" alt="Gallery Image 3">
+                <img src="recep.jpg" alt="Gallery Image 4">
+                <img src="palash.png" alt="Gallery Image 5">
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="Services">
+    <div class="services-section">
+        <div class="paragraph-container">
+            <h1>100+</h1><br>
+            <p>Bookings Completed</p><br><br>
+            <h1>150+</h1><br>
+            <p>Happy Customers</p><br>
+        </div>
+        <img src="service.jpg" alt="Services Image" class="services-image">
+        <div class="services-content">
+            <h2>Our Services</h2>
+            <div class="service-item">
+                <span class="service-icon">🔒</span>
+                <p>High Class Security</p>
+            </div>
+            <div class="service-item">
+                <span class="service-icon">🛏️</span>
+                <p>24 Hours Room Service</p>
+            </div>
+            <div class="service-item">
+                <span class="service-icon">🍽️</span>
+                <p>Restaurant</p>
+            </div>
+            <div class="service-item">
+                <span class="service-icon">🗺️</span>
+                <p>Tourist Guide Support</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <h3>Contact Info</h3>
+            <p><span class="icon">📍</span> Beside Barshal Water Tank, Manpur, Barhanti, West Bengal 723156</p>
+            <a href="mailto:kkghosh0099@gmail.com"><span class="icon">📧</span> kkghosh0099@gmail.com</a>
+            <a href="tel:+919007062180"><span class="icon">📞</span> +91 9007062180</a>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+            <h3>Send a Message</h3>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" placeholder="First Name">
+                <input type="text" placeholder="Last Name">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <input type="email" placeholder="Email">
+                <input type="tel" placeholder="Phone">
+            </div>
+            <textarea placeholder="Message"></textarea>
+            <button type="submit">Send</button>
+        </div>
+    </section>
+
+    <!-- Google Map Embedded -->
+    <div id="map">
+        <iframe 
+            width="100%" 
+            height="400" 
+            frameborder="0" 
+            style="border:0" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.5017351225647!2d86.85721547510981!3d23.586332378782714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f6e3fdd3ff9ebb%3A0x517a57e3f93c1807!2sKingsukh%20Guest%20House!5e0!3m2!1sen!2sin!4v1705088034844!5m2!1sen!2sin" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- Footer Section -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-about">
+            <h3>Kingsukh Guest House</h3>
+            <p>Discover a world of comfort, luxury, and <br>
+                adventure as you explore our curated selection  <br>
+                of hotels, making every moment of your getaway <br>
+                truly extraordinary.Explore the hidden gems<br>
+                 of Purulia, creating memories that linger <br>
+                 long after your stay.</p>
+        </div>
+        <div class="footer-amenities">
+            <h3>Our Services</h3>
+            <p>Concierge Assistance</p><br>
+            <p>Flexible Booking Options</p><br>
+            <p>Airport Transfers</p><br>
+            <p>Wellness & Recreation</p><br>
+        </div>
+        <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <p>Address: Beside Barshal Water Tank, Manpur, Barhanti, West Bengal 723156</p>
+            <p>Email:<a href = "mailto: kkghosh0099@gmail.com">kkghosh0099@gmail.com</a>
+            </p>
+            <p>Phone: <a href="tel: +91 9007062180">+91 9007062180</a></p>
+             <!-- Social Media Icons at the Bottom -->
+    <div class="social-footer">
+        <a href="https://facebook.com" target="_blank" class="social-icon"><img src="facebook.png" alt="Facebook"></a>
+        <a href="https://www.instagram.com/kingsukhguesthouse/" target="_blank" class="social-icon"><img src="instagram.png" alt="Instagram"></a>
+        <a href="https://twitter.com" target="_blank" class="social-icon"><img src="twitter.png" alt="Twitter"></a>
+        <a href="https://youtube.com" target="_blank" class="social-icon"><img src="youtube.png" alt="YouTube"></a>
+    </div>
+        </div>
+    </div>
+</div>
+<div class="footer__bar">
+    <h9> <center> Copyright © 2024 Kingsukh Guest House. All rights reserved.</center></h9>
+</div>
+</footer>
+
+     <!-- JavaScript -->
+     <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll(".slider-image");
+
+        setInterval(() => {
+            images[currentIndex].classList.remove("active");
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add("active");
+        }, 3000);
+    </script>
+    </body>
+    </html>
